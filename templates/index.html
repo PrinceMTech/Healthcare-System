@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Patients</h5>
+        <p class="display-6">{{ patient_count }}</p>
+        <a href="{{ url_for('patients_list') }}" class="btn btn-primary">Manage Patients</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Appointments</h5>
+        <p class="display-6">{{ appt_count }}</p>
+        <a href="{{ url_for('appointments_list') }}" class="btn btn-primary">Manage Appointments</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Upcoming</h5>
+        {% if upcoming %}
+          <ul class="list-group list-group-flush">
+            {% for a in upcoming %}
+              <li class="list-group-item">
+                <strong>{{ a.patient.name if a.patient else 'Unknown' }}</strong><br>
+                {{ a.doctor }} · {{ a.appt_time.strftime('%Y-%m-%d %H:%M') }} · 
+                <span class="badge text-bg-info badge-status">{{ a.status }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted mb-0">No upcoming appointments.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

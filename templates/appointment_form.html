@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>New Appointment</h3>
+<form method="post" class="mt-3">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Patient *</label>
+      <select name="patient_id" class="form-select" required>
+        <option value="" selected>Select patient</option>
+        {% for p in patients %}
+          <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Doctor *</label>
+      <input name="doctor" class="form-control" required placeholder="Doctor's name">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Date & Time *</label>
+      <input type="datetime-local" name="appt_time" class="form-control" value="{{ default_time|replace(' ', 'T') }}" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Status</label>
+      <select name="status" class="form-select">
+        {% for s in ['Scheduled','Completed','Cancelled'] %}
+        <option value="{{ s }}">{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12">
+      <label class="form-label">Notes</label>
+      <textarea name="notes" class="form-control" rows="3" placeholder="Reason, symptoms, etc."></textarea>
+    </div>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a class="btn btn-secondary" href="{{ url_for('appointments_list') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

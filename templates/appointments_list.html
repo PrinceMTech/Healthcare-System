@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Appointments</h3>
+  <a class="btn btn-success" href="{{ url_for('appointment_new') }}">+ New Appointment</a>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th><th>Patient</th><th>Doctor</th><th>Date & Time</th><th>Status</th><th>Notes</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in appointments %}
+      <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.patient.name if a.patient else '-' }}</td>
+        <td>{{ a.doctor }}</td>
+        <td>{{ a.appt_time.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td><span class="badge text-bg-info badge-status">{{ a.status }}</span></td>
+        <td>{{ a.notes or '-' }}</td>
+        <td>
+          <form action="{{ url_for('appointment_delete', aid=a.id) }}" method="post" class="d-inline" onsubmit="return confirm('Delete this appointment?');">
+            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="text-center text-muted">No appointments yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

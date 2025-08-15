@@ -1,0 +1,6 @@
+body { padding-bottom: 40px; }
+.navbar-brand strong { letter-spacing: 0.5px; }
+.table td, .table th { vertical-align: middle; }
+footer { margin-top: 40px; font-size: 0.9rem; color: #666; }
+.form-control::placeholder { opacity: 0.6; }
+.badge-status { font-size: 0.8rem; }
